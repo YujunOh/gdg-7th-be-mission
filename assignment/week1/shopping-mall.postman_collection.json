@@ -1,0 +1,351 @@
+{
+  "info": {
+    "name": "GDG 쇼핑몰 API (week1)",
+    "description": "서버를 켠 뒤 번호 순서대로 실행합니다. 서버를 재시작하면 데이터가 초기화되므로 01부터 다시 보냅니다.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 상품 등록 - 갈치",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products"
+          ]
+        },
+        "description": "기대 결과: 201\n관리자: 상품 등록",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"갈치\",\n  \"price\": 15000,\n  \"stock\": 30\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "02 상품 등록 - 고등어",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products"
+          ]
+        },
+        "description": "기대 결과: 201\n관리자: 상품 등록",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"고등어\",\n  \"price\": 5000,\n  \"stock\": 12\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "03 상품 등록 - 오징어",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products"
+          ]
+        },
+        "description": "기대 결과: 201\n관리자: 상품 등록",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"오징어\",\n  \"price\": 8000,\n  \"stock\": 7\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "04 상품 조회 - 갈치",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products?name=갈치",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "갈치"
+            }
+          ]
+        },
+        "description": "기대 결과: 200\n소비자: 상품명으로 조회 (productId 1)"
+      }
+    },
+    {
+      "name": "05 재고 추가 - 갈치 +10",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/products/1/stock",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products",
+            "1",
+            "stock"
+          ]
+        },
+        "description": "기대 결과: 200\n관리자: 재고 30 -> 40",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"quantity\": 10\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "06 상품 구매 - 갈치 2개, 고등어 1개",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "orders"
+          ]
+        },
+        "description": "기대 결과: 201\n소비자: totalPrice 35000",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "E1 에러 - 중복 상품명 등록",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products"
+          ]
+        },
+        "description": "기대 결과: 409\n이미 있는 이름",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"갈치\",\n  \"price\": 1000,\n  \"stock\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "E2 에러 - 없는 상품 조회",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products?name=없는상품",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "없는상품"
+            }
+          ]
+        },
+        "description": "기대 결과: 404\n없는 상품명"
+      }
+    },
+    {
+      "name": "E3 에러 - 재고 부족 구매",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "orders"
+          ]
+        },
+        "description": "기대 결과: 409\n재고보다 많이 구매",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 9999\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "E4 에러 - 재고 추가 수량 0",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/products/1/stock",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products",
+            "1",
+            "stock"
+          ]
+        },
+        "description": "기대 결과: 400\n수량은 1 이상",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"quantity\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "07 상품 삭제 - 고등어, 오징어",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products"
+          ]
+        },
+        "description": "기대 결과: 200\n관리자: 삭제 후 남은 목록(갈치만). 마지막에 실행",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ids\": [\n    2,\n    3\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
