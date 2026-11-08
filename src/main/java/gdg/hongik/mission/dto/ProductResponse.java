@@ -1,6 +1,6 @@
 package gdg.hongik.mission.dto;
 
-import gdg.hongik.mission.Product;
+import gdg.hongik.mission.entity.Product;
 
 public record ProductResponse(Long productId, String name, int price, int stock) {
 

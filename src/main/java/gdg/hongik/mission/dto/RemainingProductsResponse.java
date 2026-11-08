@@ -2,7 +2,7 @@ package gdg.hongik.mission.dto;
 
 import java.util.List;
 
-import gdg.hongik.mission.Product;
+import gdg.hongik.mission.entity.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record RemainingProductsResponse(List<Item> products) {
