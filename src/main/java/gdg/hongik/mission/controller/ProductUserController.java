@@ -17,6 +17,10 @@ import gdg.hongik.mission.dto.response.PurchaseResponse;
 import gdg.hongik.mission.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 @Tag(name = "소비자 (User)", description = "소비자용 상품 조회, 구매 API")
@@ -36,13 +40,15 @@ public class ProductUserController {
 
 	@Operation(summary = "상품명 단건 검색", description = "상품명으로 상품 한 개를 조회합니다.")
 	@GetMapping(params = "itemName")
-	public ResponseEntity<ProductResponse> getProduct(@RequestParam String itemName) {
+	public ResponseEntity<ProductResponse> getProduct(
+			@RequestParam @NotBlank(message = "상품명을 입력해주세요.") String itemName) {
 		return ResponseEntity.ok(productService.getProduct(itemName));
 	}
 
 	@Operation(summary = "장바구니 상품 일괄 구매", description = "하나 이상의 상품을 한 번에 구매합니다. 하나라도 없거나 재고가 부족하면 전체가 구매되지 않습니다.")
 	@PostMapping("/purchase")
-	public ResponseEntity<PurchaseResponse> purchase(@RequestBody List<PurchaseItemRequest> request) {
+	public ResponseEntity<PurchaseResponse> purchase(
+			@RequestBody @NotEmpty(message = "구매할 상품이 없습니다.") List<@NotNull(message = "구매 항목이 비어 있습니다.") @Valid PurchaseItemRequest> request) {
 		return ResponseEntity.ok(productService.purchase(request));
 	}
 }
