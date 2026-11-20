@@ -1,5 +1,6 @@
 package gdg.hongik.mission.entity;
 
+import gdg.hongik.mission.exception.OutOfStockException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -36,14 +37,13 @@ public class Product {
 	}
 
 	public void increaseStock(int quantity) {
-		this.stock += quantity;
+		this.stock = Math.addExact(stock, quantity);
 	}
 
 	public void decreaseStock(int quantity) {
+		if (stock < quantity) {
+			throw new OutOfStockException(name);
+		}
 		this.stock -= quantity;
-	}
-
-	public boolean hasEnoughStock(int quantity) {
-		return stock >= quantity;
 	}
 }
